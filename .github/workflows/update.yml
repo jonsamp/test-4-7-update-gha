@@ -57,4 +57,5 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish update
-        run: eas update --auto
+        if: success() && steps.PR.outputs.number != ''
+        run: eas update --branch pr-${{ steps.PR.outputs.number }} --message "Deploy to PR preview"
