@@ -1,10 +1,6 @@
 name: EAS Update
 on: push
 
-defaults:
-  run:
-    working-directory: apps/expo
-
 concurrency:
   group: ${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
@@ -63,4 +59,4 @@ jobs:
 
       - name: Publish update
         if: success() && steps.PR.outputs.number != ''
-        run: eas update --branch pr-${{ steps.PR.outputs.number }} --message "Deploy to PR preview"
+        run: APP_ENV=production eas update --branch pr-${{ steps.PR.outputs.number }} --message "Deploy to PR preview"
