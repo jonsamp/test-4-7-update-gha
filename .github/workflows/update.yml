@@ -1,9 +1,13 @@
-name: update
+name: EAS Preview
 on: push
 
+concurrency:
+  group: ${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  update:
-    name: EAS Update
+  pr-preview:
+    name: PR Preview
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN
@@ -12,8 +16,10 @@ jobs:
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
         with:
           node-version: 16.x
           cache: yarn
