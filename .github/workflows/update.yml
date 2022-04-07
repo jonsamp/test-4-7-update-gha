@@ -25,7 +25,7 @@ jobs:
           cache: yarn
       - uses: expo/expo-github-action@v7
         with:
-          expo-version: latest
+          eas-version: latest
           eas-cache: true
           expo-cache: true
           expo-version: 4.x
